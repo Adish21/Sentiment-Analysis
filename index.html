@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
-        <style>
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #ff6b6b, #6b6bff);
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .submit-btn:hover {
-            background: linear-gradient(45deg, #6b6bff, #ff6b6b);
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-    
+
 <body>
-    <div class="container">
-        <div class="content-box">
-            <h1 class="title">SENTIMENT ANALYSIS</h1>
-            <div class="input-group">
-                <label>COPY THE LINK OF THE ARTICLE</label>
-                <input type="text" placeholder="Paste the Link Here">
-            </div>
-            <div class="separator">or</div>
-            <div class="input-group">
-                <label>COPY THE HEADLINE OF THE ARTICLE</label>
-                <input type="text" placeholder="Paste the Headline Here">
-            </div>
-            <div class="separator">or</div>
-            <div class="upload-section">
-                <label>UPLOAD THE IMAGE</label>
-                <label class="upload-box">
-                    <span>⬆️</span>
-                    <input type="file" class="hidden">
-                </label>
-            </div>
-            <button class="submit-btn">Analyze Sentiment</button>
+    <main class="main-login">
+        <div class="left-login">
+            <h1>Analyze Your Data</h1>
+            <img src="https://i.postimg.cc/YC13sX2Z/Astronaut-cuate.png" class="left-login-img" alt="astronaut image">
         </div>
-    </div>
+
+        <div class="right-login">
+            <div class="card-login">
+                <h1>Analyze</h1>
+
+                <form id="analyze-form">
+                    <div class="textfield">
+                        <label for="link">Copy the Link</label>
+                        <input type="text" name="link" placeholder="Paste your link here">
+                    </div>
+
+                    <div class="textfield">
+                        <label for="headline">Copy the Headline</label>
+                        <input type="text" name="headline" placeholder="Enter the headline">
+                    </div>
+
+                    <div class="textfield">
+                        <label for="file">Upload Image or PDF</label>
+                        <input type="file" name="file" accept="image/*,.pdf">
+                    </div>
+
+                    <button class="btn-login" type="submit">Analyze</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("analyze-form").addEventListener("submit", function (event) {
+            let link = document.querySelector('input[name="link"]').value.trim();
+            let headline = document.querySelector('input[name="headline"]').value.trim();
+            let file = document.querySelector('input[name="file"]').files.length;
+
+            if (!link && !headline && file === 0) {
+                event.preventDefault();
+                alert("Please fill at least one field to analyze the data.");
+            }
+        });
+    </script>
 </body>
+
 </html>
