@@ -6,7 +6,28 @@
     <title>Sentiment Analysis</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
+        <style>
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ff6b6b, #6b6bff);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #6b6bff, #ff6b6b);
+        }
+    </style>
 </head>
+    
 <body>
     <div class="container">
         <div class="content-box">
@@ -28,6 +49,7 @@
                     <input type="file" class="hidden">
                 </label>
             </div>
+            <button class="submit-btn">Analyze Sentiment</button>
         </div>
     </div>
 </body>
