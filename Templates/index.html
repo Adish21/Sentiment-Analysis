@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrend</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main class="main-login">
+        <div class="left-login">
+            <h1>Understand Market Trends With FinTrend</h1>
+            <img src="/static/First-page.png" class="left-login-img" alt="illustration">
+        </div>
+
+        <div class="right-login">
+            <div class="card-login">
+                <h1>Let's analyze the article</h1>
+
+                <form id="analyze-form">
+                    <div class="textfield">
+                        <label for="inputText">Paste Link or Text</label>
+                        <textarea name="inputText" placeholder="Paste a news article or a link..." rows="5" required></textarea>
+                    </div>
+
+                    <button class="btn-login" type="submit">Analyze</button>
+                </form>
+
+                <div id="result" style="width: 100%; margin-top: 20px;">
+                    <canvas id="radarChart" width="300" height="300" style="margin-bottom: 20px;"></canvas>
+                    <ul id="summaryList" style="color:white; font-size: 14px;"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("analyze-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            const response = await fetch("/analyze", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            const colorMap = {
+                "Positive": "rgba(0, 255, 136, 0.6)",
+                "Neutral": "rgba(0, 102, 255, 0.6)",
+                "Negative": "rgba(255, 0, 102, 0.6)"
+            };
+
+            new Chart(document.getElementById("radarChart"), {
+                type: "radar",
+                data: {
+                    labels: ["Sentiment"],
+                    datasets: [{
+                        label: data.sentiment,
+                        data: [1],
+                        backgroundColor: colorMap[data.sentiment],
+                        borderColor: colorMap[data.sentiment],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 1
+                        }
+                    }
+                }
+            });
+
+            const summaryList = document.getElementById("summaryList");
+            summaryList.innerHTML = "";
+            data.summary.forEach(point => {
+                const li = document.createElement("li");
+                li.textContent = point;
+                summaryList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
